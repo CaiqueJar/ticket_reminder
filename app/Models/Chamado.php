@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-#[Fillable(['titulo', 'codigo_referencia', 'descricao', 'tempo_estimado_minutos', 'solucao'])]
+#[Fillable(['titulo', 'empresa', 'codigo_referencia', 'descricao', 'tempo_estimado_minutos', 'solucao'])]
 class Chamado extends Model
 {
     public function arquivosAlterados(): HasMany

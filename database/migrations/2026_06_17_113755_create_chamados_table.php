@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('chamados', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
+            $table->string('empresa')->default('Royal');
             $table->string('codigo_referencia', 60);
             $table->text('descricao')->nullable();
             $table->integer('tempo_estimado_minutos')->unsigned()->nullable();
