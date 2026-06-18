@@ -84,17 +84,19 @@ class ChamadoForm
                                 Repeater::make('workLogs')
                                     ->relationship('workLogs')
                                     ->addActionLabel('Adicionar novo work log')
-                                    ->columns(6)
+                                    ->columns(5)
                                     ->columnSpanFull()
+                                    ->defaultItems(1)
                                     ->schema([
                                         DateTimePicker::make('comeco_em')
                                             ->label('Início')
                                             ->required(),
                                         DateTimePicker::make('termino_em')
                                             ->label('Término')
-                                            ->required(),
+                                            ->nullable(),
                                         TextInput::make('descricao')
                                             ->label('Descrição')
+                                            ->columnSpan(3)
                                             ->nullable(),
                                     ]),
                             ]),

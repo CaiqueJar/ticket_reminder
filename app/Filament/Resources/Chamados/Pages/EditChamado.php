@@ -7,6 +7,7 @@ use App\Models\HistoricoStatusChamado;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 class EditChamado extends EditRecord
 {
@@ -21,6 +22,7 @@ class EditChamado extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
+
         $record->update($data);
 
         if(isset($data["status"])) {
@@ -35,4 +37,8 @@ class EditChamado extends EditRecord
 
         return $record;
     }
+
+
+
+    
 }
