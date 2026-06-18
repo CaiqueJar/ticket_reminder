@@ -53,6 +53,23 @@ class ChamadoForm
                                 TextInput::make('tempo_estimado_minutos')
                                     ->label('Tempo Estimado (minutos)')
                                     ->numeric(),
+                                Select::make('status')
+                                    ->label('Status')
+                                    ->preload()
+                                    ->required()
+                                    ->options([
+                                        'backlog sprint' => 'Backlog Sprint', 
+                                        'em desenvolvimento' => 'Em desenvolvimento', 
+                                        'em teste' => 'Em teste', 
+                                        'parado' => 'Parado', 
+                                        'concluido' => 'Concluído',
+                                    ])
+                                    ->default('backlog sprint')
+                                    ->afterStateHydrated(function ($state, callable $set, $record) {
+                                        if ($record && $record->exists) {
+                                            $set('status', $record->status ?? 'backlog sprint');
+                                        }
+                                    }),
                                 MarkdownEditor::make('descricao')
                                     ->label('Descrição')
                                     ->columnSpanFull(),

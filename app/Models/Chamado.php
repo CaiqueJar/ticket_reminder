@@ -34,4 +34,9 @@ class Chamado extends Model
     {
         return $this->hasMany(WorkLog::class);
     }
+
+    public function getStatusAttribute(): ?string
+    {
+        return $this->historico()->latest()->value('status_atual');
+    }
 }
