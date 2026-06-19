@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Chamados;
 use App\Filament\Resources\Chamados\Pages\CreateChamado;
 use App\Filament\Resources\Chamados\Pages\EditChamado;
 use App\Filament\Resources\Chamados\Pages\ListChamados;
+use App\Filament\Resources\Chamados\RelationManagers\WorkLogsRelationManager;
 use App\Filament\Resources\Chamados\Schemas\ChamadoForm;
 use App\Filament\Resources\Chamados\Tables\ChamadosTable;
 use App\Models\Chamado;
@@ -35,7 +36,7 @@ class ChamadoResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            WorkLogsRelationManager::class,
         ];
     }
 

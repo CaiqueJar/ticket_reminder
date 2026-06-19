@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable(['titulo', 'empresa', 'codigo_referencia', 'descricao', 'tempo_estimado_minutos', 'solucao'])]
 class Chamado extends Model
@@ -33,6 +34,12 @@ class Chamado extends Model
     public function workLogs(): HasMany
     {
         return $this->hasMany(WorkLog::class);
+    }
+
+    public function activeWorkLog(): HasOne
+    {
+        return $this->hasOne(WorkLog::class)
+            ->whereNull('termino_em');
     }
 
     public function getStatusAttribute(): ?string
