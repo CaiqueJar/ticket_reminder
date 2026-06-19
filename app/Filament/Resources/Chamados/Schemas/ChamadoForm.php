@@ -48,10 +48,12 @@ public static function configure(Schema $schema): Schema
                             Select::make('participantes')
                                 ->label('Participantes')
                                 ->multiple()
+                                ->required()
                                 ->preload()
                                 ->relationship('participantes', 'name'),
                             TextInput::make('tempo_estimado_minutos')
                                 ->label('Tempo Estimado (minutos)')
+                                ->required()
                                 ->numeric(),
                             Select::make('status')
                                 ->label('Status')

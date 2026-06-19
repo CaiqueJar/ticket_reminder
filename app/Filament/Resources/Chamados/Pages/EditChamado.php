@@ -7,7 +7,6 @@ use App\Models\HistoricoStatusChamado;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\ValidationException;
 
 class EditChamado extends EditRecord
 {
