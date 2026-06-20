@@ -79,6 +79,20 @@ public static function configure(Schema $schema): Schema
                                 ->label('Solução')
                                 ->columnSpanFull(),
                         ]),
+                    Tabs\Tab::make('Arquivos Alterados')
+                        ->schema([
+                            Repeater::make('arquivosAlterados')
+                                ->label('Arquivos Alterados')
+                                ->relationship('arquivosAlterados')
+                                ->columns(1)
+                                ->simple(
+                                    TextInput::make('caminho_arquivo')
+                                        ->label('Caminho do Arquivo')
+                                        ->columnSpanFull()
+                                        ->required()
+                                        ->reactive()
+                                ),
+                        ]),
                 ])
         ]);
 }
