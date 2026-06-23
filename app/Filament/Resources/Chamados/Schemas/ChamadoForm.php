@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Chamados\Schemas;
 
+use App\Models\Participante;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
@@ -50,7 +52,7 @@ public static function configure(Schema $schema): Schema
                                 ->multiple()
                                 ->required()
                                 ->preload()
-                                ->relationship('participantes', 'name'),
+                                ->relationship('participantes', 'nome'),
                             TextInput::make('tempo_estimado_minutos')
                                 ->label('Tempo Estimado (minutos)')
                                 ->required()
@@ -79,12 +81,49 @@ public static function configure(Schema $schema): Schema
                                 ->label('Solução')
                                 ->columnSpanFull(),
                         ]),
+                    Tabs\Tab::make('Comentários')
+                        ->schema([
+                            Repeater::make('participantesChamados')
+                                ->columns(1)
+                                ->nullable()
+                                ->defaultItems(0)
+                                ->reorderable(false)
+                                ->schema([
+                                    Grid::make()
+                                        ->columns(4)
+                                        ->schema([
+                                            Select::make('participante_id')
+                                                ->label('Participante')
+                                                ->options(Participante::pluck('nome', 'id')->toArray())
+                                                ->searchable()
+                                                ->columnOrder(1)
+                                                ->required(),
+                                            Select::make('tipo')
+                                                ->label('Tipo')
+                                                ->options([
+                                                    'tecnico' => 'Técnico',
+                                                    'cliente' => 'Cliente',
+                                                    'geral' => 'Geral',
+                                                    'impedimento' => 'Impedimento',
+                                                ])
+                                                ->columnOrder(2)
+                                                ->default('geral')
+                                                ->required(),
+                                        ]),
+                                    MarkdownEditor::make('texto')
+                                        ->label('Comentário')
+                                        ->columnSpanFull()
+                                        ->required(),
+                                ])
+                        ]),
                     Tabs\Tab::make('Arquivos Alterados')
                         ->schema([
                             Repeater::make('arquivosAlterados')
                                 ->label('Arquivos Alterados')
-                                ->relationship('arquivosAlterados')
+                                ->relationship()
                                 ->columns(1)
+                                ->defaultItems(0)
+                                ->nullable()
                                 ->simple(
                                     TextInput::make('caminho_arquivo')
                                         ->label('Caminho do Arquivo')

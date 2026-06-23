@@ -11,7 +11,7 @@ class ParticipanteForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
+                TextInput::make('nome')
                     ->required(),
             ]);
     }

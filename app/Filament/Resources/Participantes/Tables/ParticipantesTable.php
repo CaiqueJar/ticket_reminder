@@ -14,7 +14,7 @@ class ParticipantesTable
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('nome')
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

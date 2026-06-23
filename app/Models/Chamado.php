@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable(['titulo', 'empresa', 'codigo_referencia', 'descricao', 'tempo_estimado_minutos', 'solucao'])]
@@ -34,6 +35,16 @@ class Chamado extends Model
     public function workLogs(): HasMany
     {
         return $this->hasMany(WorkLog::class);
+    }
+
+    public function comentarios(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            ComentariosChamado::class,
+            ParticipantesChamado::class,
+            'chamado_id',
+            'participantes_chamados_id'
+        );
     }
 
     public function activeWorkLog(): HasOne
