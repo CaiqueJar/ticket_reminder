@@ -20,8 +20,4 @@ class ParticipantesChamado extends Model
         return $this->belongsTo(Participante::class);
     }
 
-    public function comentarios(): HasMany
-    {
-        return $this->hasMany(ComentariosChamado::class, 'participantes_chamados_id');
-    }
 }

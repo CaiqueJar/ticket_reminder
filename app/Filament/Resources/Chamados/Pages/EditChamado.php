@@ -21,9 +21,9 @@ class EditChamado extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        $participantesChamados = $data['participantesChamados'] ?? null;
+        $comentarios = $data['comentarios'] ?? null;
 
-        unset($data['participantesChamados']);
+        unset($data['comentarios']);
 
         $record->update($data);
 
@@ -37,20 +37,17 @@ class EditChamado extends EditRecord
             ]);
         }
 
-        if ($participantesChamados !== null) {
-            $record->participantesChamados()->delete();
+        if ($comentarios !== null) {
+            $record->comentarios()->delete();
 
-            foreach ($participantesChamados as $participanteChamadoData) {
-                $comentarioData = [
-                    'tipo' => $participanteChamadoData['tipo'],
-                    'texto' => $participanteChamadoData['texto'],
-                ];
+            foreach ($comentarios as $comentarioData) {
+                $record->participantes()->syncWithoutDetaching($comentarioData['participante_id']);
 
-                $participanteChamado = $record->participantesChamados()->firstOrCreate([
-                    'participante_id' => $participanteChamadoData['participante_id'],
+                $record->comentarios()->create([
+                    'participante_id' => $comentarioData['participante_id'],
+                    'tipo' => $comentarioData['tipo'],
+                    'texto' => $comentarioData['texto'],
                 ]);
-
-                $participanteChamado->comentarios()->create($comentarioData);
             }
         }
 
