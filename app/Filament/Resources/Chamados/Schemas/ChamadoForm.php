@@ -83,7 +83,8 @@ public static function configure(Schema $schema): Schema
                         ]),
                     Tabs\Tab::make('Comentários')
                         ->schema([
-                            Repeater::make('participantesChamados')
+                            Repeater::make('comentarios')
+                                ->relationship('comentarios')
                                 ->columns(1)
                                 ->nullable()
                                 ->defaultItems(0)
@@ -94,7 +95,7 @@ public static function configure(Schema $schema): Schema
                                         ->schema([
                                             Select::make('participante_id')
                                                 ->label('Participante')
-                                                ->options(Participante::pluck('nome', 'id')->toArray())
+                                                ->relationship('participante', 'nome')
                                                 ->searchable()
                                                 ->columnOrder(1)
                                                 ->required(),

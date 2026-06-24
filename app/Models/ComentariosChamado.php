@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Table('comentarios_chamado')]
-#[Fillable(['participantes_chamados_id', 'tipo', 'texto'])]
+#[Fillable(['chamado_id', 'participante_id', 'tipo', 'texto'])]
 class ComentariosChamado extends Model
 {
-    public function participantesChamado(): BelongsTo
+    public function chamado(): BelongsTo
     {
-        return $this->belongsTo(ParticipantesChamado::class, 'participantes_chamados_id');
+        return $this->belongsTo(Chamado::class);
+    }
+
+    public function participante(): BelongsTo
+    {
+        return $this->belongsTo(Participante::class);
     }
 }

@@ -13,23 +13,20 @@ class CreateChamado extends CreateRecord
 
     protected function handleRecordCreate(array $data): Model
     {
-        $participantesChamados = $data['participantesChamados'] ?? [];
+        $comentarios = $data['comentarios'] ?? [];
 
-        unset($data['participantesChamados']);
+        unset($data['comentarios']);
 
         $record = Chamado::create($data);
 
-        foreach ($participantesChamados as $participanteChamadoData) {
-            $comentarioData = [
-                'tipo' => $participanteChamadoData['tipo'],
-                'texto' => $participanteChamadoData['texto'],
-            ];
+        foreach ($comentarios as $comentarioData) {
+            $record->participantes()->syncWithoutDetaching($comentarioData['participante_id']);
 
-            $participanteChamado = $record->participantesChamados()->firstOrCreate([
-                'participante_id' => $participanteChamadoData['participante_id'],
+            $record->comentarios()->create([
+                'participante_id' => $comentarioData['participante_id'],
+                'tipo' => $comentarioData['tipo'],
+                'texto' => $comentarioData['texto'],
             ]);
-
-            $participanteChamado->comentarios()->create($comentarioData);
         }
 
         return $record;
