@@ -47,6 +47,12 @@ public static function configure(Schema $schema): Schema
                                         ->columnSpan(3)
                                         ->required(),
                                 ]),
+                            Select::make('setores')
+                                ->label('Setores')
+                                ->multiple()
+                                ->required()
+                                ->preload()
+                                ->relationship('setores', 'nome'),
                             Select::make('participantes')
                                 ->label('Participantes')
                                 ->multiple()

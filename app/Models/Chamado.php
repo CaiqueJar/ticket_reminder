@@ -31,6 +31,16 @@ class Chamado extends Model
         return $this->hasMany(ParticipantesChamado::class);
     }
 
+    public function setores(): BelongsToMany
+    {
+        return $this->belongsToMany(Setor::class, 'setor_chamados');
+    }
+
+    public function setorChamados(): HasMany
+    {
+        return $this->hasMany(SetorChamado::class);
+    }
+
     public function workLogs(): HasMany
     {
         return $this->hasMany(WorkLog::class);
